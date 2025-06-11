@@ -4,7 +4,6 @@ import com.caliberly.models.Config;
 import com.caliberly.models.GameResult;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GameEngine {
     private final Config config;
