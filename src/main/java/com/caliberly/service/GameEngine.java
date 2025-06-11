@@ -23,7 +23,7 @@ public class GameEngine {
         // 1. Fill matrix with standard & bonus symbols based on probabilities
         for (int row = 0; row < config.rows; row++) {
             for (int col = 0; col < config.columns; col++) {
-                matrix[row][col] = drawSymbol(row, col);
+                matrix[row][col] = this.drawSymbol(row, col);
                 if (isStandard(matrix[row][col])) foundSymbols.add(matrix[row][col]);
             }
         }
@@ -113,13 +113,17 @@ public class GameEngine {
         int cumulative = 0;
         for (Map.Entry<String, Integer> e : map.entrySet()) {
             cumulative += e.getValue();
-            if (r <= cumulative) return e.getKey();
+            if (r <= cumulative) {
+                return e.getKey();
+            }
         }
         return map.keySet().iterator().next(); // fallback
     }
 
     private boolean matchesLinear(String[][] matrix, String symbol, List<List<String>> areas) {
-        if (areas == null) return false;
+        if (areas == null) {
+            return false;
+        }
         for (List<String> group : areas) {
             boolean match = true;
             for (String coord : group) {
@@ -129,7 +133,9 @@ public class GameEngine {
                     break;
                 }
             }
-            if (match) return true;
+            if (match) {
+                return true;
+            }
         }
         return false;
     }
