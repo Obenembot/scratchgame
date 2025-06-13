@@ -6,12 +6,29 @@ import com.caliberly.service.GameEngine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
+import java.io.IOException;
 
+@SpringBootApplication
 public class ScratchGameApplication {
 
+
     public static void main(String[] args) throws Exception {
+
+        if (args.length == 0) {
+            SpringApplication.run(ScratchGameApplication.class, args);
+        }
+
+        if (args.length > 0) {
+            runScratchGame(args);
+        }
+
+    }
+
+    private static void runScratchGame(String[] args) throws IOException {
 
         Logger logger = LoggerFactory.getLogger(ScratchGameApplication.class);
         String configFile = null;
@@ -41,7 +58,7 @@ public class ScratchGameApplication {
         GameResult result = engine.play(betAmount);
         // Using Pretty form ObjectMapper to have a nice Json for output
         System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
-
     }
 
 }
+
