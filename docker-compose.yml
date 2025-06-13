@@ -14,6 +14,12 @@ services:
       - discovery.type=single-node
       - plugins.security.disabled=true
       - "OPENSEARCH_JAVA_OPTS=-Xms1012m -Xmx1012m"
+      - cluster.routing.allocation.disk.watermark.low=95%
+      - cluster.routing.allocation.disk.watermark.high=98%
+      - cluster.routing.allocation.disk.watermark.flood_stage=99%
+      - cluster.info.update.interval=1m
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
     networks:
       - graylog
     ports:
@@ -28,6 +34,8 @@ services:
       - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
       - GRAYLOG_ELASTICSEARCH_HOSTS=http://opensearch:9200
       - GRAYLOG_MESSAGE_JOURNAL_MAX_SIZE=600mb
+    volumes:
+      - graylog_journal:/usr/share/graylog/data/journal
     networks:
       - graylog
     depends_on:
@@ -37,11 +45,10 @@ services:
       - "9000:9000"       # Web interface
       - "12201:12201/udp" # GELF UDP input
       - "12201:12201/tcp" # GELF TCP input
-    volumes:
-      - graylog_journal:/usr/share/graylog/data/journal
 
 networks:
   graylog:
 
 volumes:
   graylog_journal:
+  opensearch_data:

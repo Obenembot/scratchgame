@@ -12,8 +12,13 @@ public class LogTestController {
 
     @GetMapping("/test-log")
     public String logTest() {
-        logger.info("This is an info log message sent to Graylog!");
-        logger.error("This is an error log message!");
+        int value1 = 10;
+        int value2 = 15;
+        if (value1 > value2) {
+            logger.info("Value 1 is greater than value 2");
+        } else {
+            logger.info("Value 2 is greater than value 1");
+        }
         return "Log sent!";
     }
 }
