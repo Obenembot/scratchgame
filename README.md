@@ -29,3 +29,28 @@ Title (optional): e.g., Spring Boot GELF
 Click "Launch"
 
 ```
+
+
+### USe this to build and run the service
+
+```angular2html
+ ./gradlew clean build
+```
+
+```angular2html
+java -jar build/libs/ScratchGame.jar --config config.json --betting-amount 100
+
+```
+
+### Docker Build
+
+```bash
+docker build -t thembaembot/scratchgame:latest .
+
+```
+
+### Docker PUSH
+
+```bash
+ sudo docker push thembaembot/scratchgame:latest
+```
