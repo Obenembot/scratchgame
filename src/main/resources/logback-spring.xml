@@ -1,0 +1,12 @@
+<configuration>
+    <appender name="GELF" class="de.siegmar.logbackgelf.GelfUdpAppender">
+        <host>localhost</host> <!-- Replace with Graylog IP -->
+        <port>12201</port>
+        <includeFullMdc>true</includeFullMdc>
+        <additionalField>application=MySpringBootApp</additionalField>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="GELF"/>
+    </root>
+</configuration>

@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    networks:
+      - graylog
+
+  opensearch:
+    image: opensearchproject/opensearch:2.11.1
+    container_name: opensearch
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+    networks:
+      - graylog
+    ports:
+      - "9200:9200"
+
+  graylog:
+    image: graylog/graylog:5.2
+    container_name: graylog
+    environment:
+      - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
+      - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+      - GRAYLOG_ELASTICSEARCH_HOSTS=http://opensearch:9200
+    networks:
+      - graylog
+    depends_on:
+      - mongo
+      - opensearch
+    ports:
+      - "9000:9000"       # Web interface
+      - "12201:12201/udp" # GELF UDP input
+      - "12201:12201/tcp" # GELF TCP input
+
+networks:
+  graylog:

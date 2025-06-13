@@ -4,14 +4,20 @@ import com.caliberly.models.Config;
 import com.caliberly.models.GameResult;
 import com.caliberly.service.GameEngine;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class ScratchGameApplication {
 
     public static void main(String[] args) throws Exception {
+
+        Logger logger = LoggerFactory.getLogger(ScratchGameApplication.class);
         String configFile = null;
         int betAmount = 0;
+
+        logger.info("This is a test log");
 
         for (int i = 0; i < args.length; i++) {
             if ("--config".equals(args[i])) {
